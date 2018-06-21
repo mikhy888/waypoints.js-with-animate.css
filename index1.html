@@ -1,30 +1,56 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" type="text/css">
+
 <html>
+    
+    <body>
+        <div class="animate-box" data-animate-effect="fadeInLeft">
+            all the html contents goes here
+        </div>
+    </body>
+</html>
 
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.css" rel="stylesheet" type="text/css">
-    <style>
-        .hidden {
-            opacity: 0;
-        }
 
-        .visible {
-            opacity: 1;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container fade-in-up">sfsadfsdf</div>
-</body>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
 <script>
-    $('.fade-in-up').addClass('hidden').waypoint({
-        handler: function () {
-            $(this.element).addClass("visible animated fadeInUp")
-        },
-        offset: '3%'
-    });
-</script>
+    var contentWayPoint = function() {
+		var i = 0;
+		$('.animate-box').waypoint( function( direction ) {
 
-</html>
+			if( direction === 'down' && !$(this.element).hasClass('animated') ) {
+				
+				i++;
+
+				$(this.element).addClass('item-animate');
+				setTimeout(function(){
+
+					$('body .animate-box.item-animate').each(function(k){
+						var el = $(this);
+						setTimeout( function () {
+							var effect = el.data('animate-effect');
+							if ( effect === 'fadeIn') {
+								el.addClass('fadeIn animated');
+							} else if ( effect === 'fadeInLeft') {
+								el.addClass('fadeInLeft animated');
+							} else if ( effect === 'fadeInRight') {
+								el.addClass('fadeInRight animated');
+							} else {
+								el.addClass('fadeInUp animated');
+							}
+
+							el.removeClass('item-animate');
+						},  k * 200, 'easeInOutExpo' );
+					});
+					
+				}, 100);
+				
+			}
+
+		} , { offset: '85%' } );
+	};
+    
+    // Document on load.
+	$(function(){
+		contentWayPoint();
+	});
+
+</script>
