@@ -1,56 +1,104 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" type="text/css">
+<style>
+.animate-box {
+	opacity: 0;
+	display: inline-block
+}
 
+.the-height,
+body,
+html {
+	height: 100%;
+	width: 100%;
+}
+
+.animated {
+	-webkit-animation-duration: 1.5s;
+	animation-duration: 1.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+</style>
 <html>
-    
-    <body>
-        <div class="animate-box" data-animate-effect="fadeInLeft">
-            all the html contents goes here
-        </div>
-    </body>
+
+<body>
+	<div class="the-height">
+		<div class="animate-box" data-animate-effect="fadeIn">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeInLeft">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeIn">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeInLeft">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeIn">
+			all the html contents goes here
+		</div>
+	</div>
+
+	<div class="the-height">
+		<div class="animate-box" data-animate-effect="fadeIn">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeInLeft">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeIn">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeInLeft">
+			all the html contents goes here
+		</div>
+		<div class="animate-box" data-animate-effect="fadeIn">
+			all the html contents goes here
+		</div>
+	</div>
+
+</body>
+
 </html>
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
 <script>
-    var contentWayPoint = function() {
+	var contentWayPoint = function () {
 		var i = 0;
-		$('.animate-box').waypoint( function( direction ) {
+		$('.animate-box').waypoint(function (direction) {
+			if (direction === 'down' && !$(this.element).hasClass('animated')) {
 
-			if( direction === 'down' && !$(this.element).hasClass('animated') ) {
-				
 				i++;
-
 				$(this.element).addClass('item-animate');
-				setTimeout(function(){
-
-					$('body .animate-box.item-animate').each(function(k){
+				setTimeout(function () {
+					$('body .animate-box.item-animate').each(function (k) {
 						var el = $(this);
-						setTimeout( function () {
+						setTimeout(function () {
 							var effect = el.data('animate-effect');
-							if ( effect === 'fadeIn') {
+							/*if (effect === 'fadeIn') {
 								el.addClass('fadeIn animated');
-							} else if ( effect === 'fadeInLeft') {
+							} else if (effect === 'fadeInLeft') {
 								el.addClass('fadeInLeft animated');
-							} else if ( effect === 'fadeInRight') {
+							} else if (effect === 'fadeInRight') {
 								el.addClass('fadeInRight animated');
 							} else {
 								el.addClass('fadeInUp animated');
-							}
-
+							}*/
+							el.addClass(effect + ' animated');
 							el.removeClass('item-animate');
-						},  k * 200, 'easeInOutExpo' );
+						}, k * 200, 'easeInOutExpo');
 					});
-					
+
 				}, 100);
-				
+
 			}
-
-		} , { offset: '85%' } );
+		}, { offset: '85%' });
 	};
-    
-    // Document on load.
-	$(function(){
-		contentWayPoint();
-	});
 
+    // Document on load.
+    $(function () {
+    	contentWayPoint();
+    });
 </script>
